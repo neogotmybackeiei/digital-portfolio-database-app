@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Timeline{% endblock %}
+{% block content %}
+<h1>Timeline</h1>
+{% for year, works in grouped.items %}
+  <div class="timeline-year">{{ year }}</div>
+  <div class="timeline">
+    {% for work in works %}
+      <div class="timeline-item">
+        <div class="date">{{ work.work_date|date:"M j, Y" }}{% if work.category %} · {{ work.category.name }}{% endif %}</div>
+        <a href="{% url 'work_detail' work.pk %}"><strong>{{ work.title }}</strong></a>
+        {% if work.description %}<div style="color:var(--muted);font-size:0.92rem">{{ work.description|truncatechars:140 }}</div>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% empty %}
+  <p>No works yet.</p>
+{% endfor %}
+{% endblock %}

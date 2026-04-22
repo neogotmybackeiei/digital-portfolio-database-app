@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ work.title }}{% endblock %}
+{% block content %}
+<a href="{% url 'work_list' %}">← Back</a>
+<h1>{{ work.title }}</h1>
+<p class="meta">
+  {% if work.category %}{{ work.category.name }} · {% endif %}
+  {{ work.work_date|date:"F j, Y" }}
+  {% if work.is_pinned %} · ★ Featured{% endif %}
+</p>
+{% if work.description %}<p>{{ work.description|linebreaks }}</p>{% endif %}
+{% if work.link %}<p><a href="{{ work.link }}" target="_blank" rel="noopener">External link ↗</a></p>{% endif %}
+<div>{% for k in work.keyword_list %}<span class="tag">{{ k }}</span>{% endfor %}</div>
+
+<h2 style="margin-top:28px">Files</h2>
+<div class="grid">
+  {% for f in work.files.all %}
+    <div class="card">
+      {% if f.is_image %}
+        <img src="{{ f.file.url }}" alt="" style="width:100%;border-radius:10px">
+      {% else %}
+        <div class="pdf-thumb">{{ f.extension|upper }}</div>
+      {% endif %}
+      <p style="margin:8px 0 0"><a href="{{ f.file.url }}" target="_blank">{{ f }}</a></p>
+    </div>
+  {% empty %}<p>No files attached.</p>{% endfor %}
+</div>
+
+<p style="margin-top:24px">
+  <a href="{% url 'work_edit' work.pk %}" class="btn">Edit</a>
+  <form method="post" action="{% url 'work_delete' work.pk %}" style="display:inline">
+    {% csrf_token %}
+    <button type="submit" class="btn danger" onclick="return confirm('Delete this work?')">Delete</button>
+  </form>
+</p>
+{% endblock %}

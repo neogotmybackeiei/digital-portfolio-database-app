@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Filter{% endblock %}
+{% block content %}
+<h1>Filter works</h1>
+<form method="get" class="filters">
+  <input type="text" name="q" value="{{ q }}" placeholder="Keyword / title / description">
+  <select name="category">
+    <option value="">All categories</option>
+    {% for c in categories %}
+      <option value="{{ c.pk }}" {% if selected_category == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+  <input type="date" name="from" value="{{ date_from }}" title="From date">
+  <input type="date" name="to" value="{{ date_to }}" title="To date">
+  <select name="file_type">
+    <option value="">Any file type</option>
+    <option value="pdf" {% if file_type == 'pdf' %}selected{% endif %}>PDF</option>
+    <option value="image" {% if file_type == 'image' %}selected{% endif %}>Any image</option>
+    <option value="png" {% if file_type == 'png' %}selected{% endif %}>PNG</option>
+    <option value="jpeg" {% if file_type == 'jpeg' %}selected{% endif %}>JPEG</option>
+  </select>
+  <button class="btn" type="submit">Filter</button>
+</form>
+
+<p class="meta">{{ works|length }} result{{ works|length|pluralize }}</p>
+<div class="grid">
+  {% for work in works %}{% include 'works/_work_card.html' %}
+  {% empty %}<p>No matches.</p>{% endfor %}
+</div>
+{% endblock %}

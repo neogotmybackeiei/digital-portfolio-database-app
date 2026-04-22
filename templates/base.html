@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Portfolio{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<nav class="nav">
+  <a href="{% url 'showcase' %}" class="brand">◆ Portfolio</a>
+  <a href="{% url 'showcase' %}">Showcase</a>
+  <a href="{% url 'timeline' %}">Timeline</a>
+  <a href="{% url 'filter' %}">Filter</a>
+  <a href="{% url 'work_list' %}">Manage</a>
+  <a href="{% url 'manage_pins' %}">Pin Works</a>
+  <a href="{% url 'work_create' %}" class="btn">+ Add work</a>
+</nav>
+<main class="container">
+  {% if messages %}
+    <ul class="messages">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

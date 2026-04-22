@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Pin Works{% endblock %}
+{% block content %}
+<h1>Pin Works</h1>
+<p>Select up to 3 works to feature at the top of the showcase. Order is by selection.</p>
+<form method="post">
+  {% csrf_token %}
+  <div class="grid">
+    {% for w in works %}
+      <label class="card" style="cursor:pointer">
+        <input type="checkbox" name="pinned" value="{{ w.pk }}"
+          {% if w.pk in current %}checked{% endif %}>
+        <strong>{{ w.title }}</strong>
+        <div class="meta">{{ w.category.name|default:"—" }} · {{ w.work_date|date:"M Y" }}</div>
+      </label>
+    {% endfor %}
+  </div>
+  <p style="margin-top:18px">
+    <button type="submit" class="btn">Save pins</button>
+    <a href="{% url 'showcase' %}" class="btn secondary">Cancel</a>
+  </p>
+</form>
+<script>
+document.querySelectorAll('input[name=pinned]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const checked = document.querySelectorAll('input[name=pinned]:checked');
+    if (checked.length > 3) { cb.checked = false; alert('Maximum 3 pins.'); }
+  });
+});
+</script>
+{% endblock %}

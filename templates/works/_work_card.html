@@ -1,0 +1,20 @@
+<a href="{% url 'work_detail' work.pk %}" class="card work-card">
+  {% with first=work.files.first %}
+    {% if first and first.is_image %}
+      <img class="thumb" src="{{ first.file.url }}" alt="{{ work.title }}">
+    {% elif first and first.is_pdf and first.thumbnail %}
+      <img class="thumb" src="{{ first.thumbnail.url }}" alt="{{ work.title }}">
+    {% elif first and first.is_pdf %}
+      <div class="pdf-thumb">PDF</div>
+    {% else %}
+      <div class="pdf-thumb">—</div>
+    {% endif %}
+  {% endwith %}
+  <h3 style="margin:0">{{ work.title }}</h3>
+  <div class="meta">
+    {% if work.category %}{{ work.category.name }} · {% endif %}
+    {{ work.work_date|date:"M Y" }}
+  </div>
+  {% if work.description %}<p>{{ work.description|truncatewords:15 }}</p>{% endif %}
+  {% for k in work.keyword_list|slice:":3" %}<span class="tag">{{ k }}</span>{% endfor %}
+</a>
