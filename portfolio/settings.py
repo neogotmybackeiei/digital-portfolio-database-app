@@ -99,4 +99,7 @@ DATA_UPLOAD_MAX_NUMBER_FILES = 50
 # Compatibility shim for django-cloudinary-storage on Django 5.x
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+CSRF_TRUSTED_ORIGINS = ['django-app-production-539b.up.railway.app']
+CSRF_COOKIE_SECURE = True
+
 #rebuild
