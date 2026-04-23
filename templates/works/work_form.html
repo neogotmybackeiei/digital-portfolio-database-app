@@ -2,7 +2,7 @@
 {% block title %}{% if mode == 'edit' %}Edit{% else %}Add{% endif %} work{% endblock %}
 {% block content %}
 <h1>{% if mode == 'edit' %}Edit work{% else %}Add a new work{% endif %}</h1>
-<form method="post" enctype="multipart/form-data" class="form">
+<form method="post" enctype="multipart/form-data" class="form" id="work-form">
   {% csrf_token %}
   {% if form.non_field_errors %}<div class="errorlist">{{ form.non_field_errors }}</div>{% endif %}
   {% for field in form %}
@@ -13,7 +13,6 @@
       {{ field.errors }}
     </div>
   {% endfor %}
-
   {% if work and work.files.all %}
     <div>
       <label>Existing files</label>
@@ -21,20 +20,32 @@
         {% for f in work.files.all %}
           <li>
             <a href="{{ f.file.url }}" target="_blank">{{ f }}</a>
-            <form method="post" action="{% url 'file_delete' f.pk %}" style="margin:0">
-              {% csrf_token %}
-              <button class="btn danger" type="submit"
-                onclick="return confirm('Remove this file?')">Remove</button>
-            </form>
+            <button
+              class="btn danger"
+              type="submit"
+              form="delete-form-{{ f.pk }}"
+              onclick="return confirm('Remove this file?')">Remove</button>
           </li>
         {% endfor %}
       </ul>
     </div>
   {% endif %}
-
   <div>
     <button type="submit" class="btn">Save</button>
     <a href="{% url 'work_list' %}" class="btn secondary">Cancel</a>
   </div>
 </form>
+ 
+{# Delete forms outside the main form to avoid invalid nested forms #}
+{% if work and work.files.all %}
+  {% for f in work.files.all %}
+    <form id="delete-form-{{ f.pk }}"
+          method="post"
+          action="{% url 'file_delete' f.pk %}"
+          style="display:none">
+      {% csrf_token %}
+    </form>
+  {% endfor %}
+{% endif %}
+ 
 {% endblock %}
