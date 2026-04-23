@@ -70,6 +70,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# WhiteNoise — serve media files alongside static files in all environments.
+# WHITENOISE_AUTOREFRESH ensures newly uploaded files are picked up without
+# restarting the server. The media directory is added in wsgi.py so files
+# are served under MEDIA_URL (/media/) rather than at the root.
+WHITENOISE_AUTOREFRESH = True
+WHITENOISE_USE_FINDERS = True
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_NUMBER_FILES = 50
