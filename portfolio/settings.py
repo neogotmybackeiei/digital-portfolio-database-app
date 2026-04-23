@@ -11,14 +11,13 @@ DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'cloudinary_storage',   # ← add this first
+    'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',   # ← add this first
-    'django.contrib.staticfiles',
-    'cloudinary',
     'django.contrib.staticfiles',
     'works',
 ]
