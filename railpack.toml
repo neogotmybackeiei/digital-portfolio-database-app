@@ -1,5 +1,5 @@
 [build]
-cmd = python manage.py collectstatic --noinput
+cmd = python manage.py collectstatic --noinput && mkdir -p /app/media && cp -r media/* /app/media/ 2>/dev/null || true
 
 [env]
 RAILPACK_SKIP_DJANGO = "true"
