@@ -96,4 +96,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_NUMBER_FILES = 50
 
+# Compatibility shim for django-cloudinary-storage on Django 5.x
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 #rebuild
