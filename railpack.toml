@@ -1,2 +1,5 @@
 [build]
 cmd = python manage.py collectstatic --noinput
+
+[env]
+RAILPACK_SKIP_DJANGO = "true"
