@@ -22,4 +22,4 @@ RUN python manage.py collectstatic --noinput
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "portfolio.wsgi:application"]
+CMD ["gunicorn", "portfolio.wsgi:application", "--timeout", "120", "--workers", "2"]
