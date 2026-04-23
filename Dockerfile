@@ -22,10 +22,4 @@ RUN python manage.py collectstatic --noinput
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Copy repo media files into the image at the volume mount point so they
-# are available on first deploy (the persistent volume will overlay this
-# directory at runtime, but Railway copies the image contents into an
-# empty volume on first mount).
-RUN mkdir -p /app/media && cp -r media/. /app/media/
-
 CMD ["gunicorn", "portfolio.wsgi:application"]
