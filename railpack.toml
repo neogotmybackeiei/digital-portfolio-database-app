@@ -1,2 +1,0 @@
-[build]
-cmd = python manage.py collectstatic --noinput && mkdir -p /app/media && cp -r media/* /app/media/ 2>/dev/null || true
