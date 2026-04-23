@@ -14,6 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Add this before the collectstatic line:
+ENV SECRET_KEY=build-placeholder-not-real
+ENV DEBUG=False
+RUN python manage.py collectstatic --noinput
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
